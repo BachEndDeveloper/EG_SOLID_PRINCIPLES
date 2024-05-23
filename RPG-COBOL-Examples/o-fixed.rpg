@@ -1,0 +1,61 @@
+**FREE
+ctl-opt nomain;
+
+// Prototypes for Invoice procedures
+dcl-pr Invoice_GetInvoiceDiscount extproc('Invoice_GetInvoiceDiscount') like(Discount);
+end-pr;
+
+dcl-pr Invoice_GetTotal extproc('Invoice_GetTotal') like(Total);
+    *n like(Total);
+end-pr;
+
+// Prototypes for OneTimeInvoice procedures
+dcl-pr OneTimeInvoice_GetInvoiceDiscount extproc('OneTimeInvoice_GetInvoiceDiscount') like(Discount);
+end-pr;
+
+// Prototypes for RecurringInvoice procedures
+dcl-pr RecurringInvoice_GetInvoiceDiscount extproc('RecurringInvoice_GetInvoiceDiscount') like(Discount);
+end-pr;
+
+// Prototypes for TopCustomerInvoice procedures
+dcl-pr TopCustomerInvoice_GetInvoiceDiscount extproc('TopCustomerInvoice_GetInvoiceDiscount') like(Discount);
+end-pr;
+
+// Variables
+dcl-s Discount decimal(5:2);
+dcl-s Total decimal(10:2);
+
+// Invoice procedures
+dcl-proc Invoice_GetInvoiceDiscount export;
+    dcl-pi *n like(Discount);
+    end-pi;
+    return 0;
+end-proc;
+
+dcl-proc Invoice_GetTotal export;
+    dcl-pi *n like(Total);
+        totalParam like(Total);
+    end-pi;
+    return totalParam - Invoice_GetInvoiceDiscount();
+end-proc;
+
+// OneTimeInvoice procedures
+dcl-proc OneTimeInvoice_GetInvoiceDiscount export;
+    dcl-pi *n like(Discount);
+    end-pi;
+    return 1.0;
+end-proc;
+
+// RecurringInvoice procedures
+dcl-proc RecurringInvoice_GetInvoiceDiscount export;
+    dcl-pi *n like(Discount);
+    end-pi;
+    return 2.0;
+end-proc;
+
+// TopCustomerInvoice procedures
+dcl-proc TopCustomerInvoice_GetInvoiceDiscount export;
+    dcl-pi *n like(Discount);
+    end-pi;
+    return 3.0;
+end-proc;
